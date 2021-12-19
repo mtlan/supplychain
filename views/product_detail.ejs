@@ -1,0 +1,75 @@
+<%- include ("_layouts/header") %>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-5 ">
+                    <a href="../../../backend/product_images/<%= p.id %>/<%= p.image %>" class="image-popup"><img
+                            src="../../../backend/product_images/<%= p.id %>/<%= p.image %>" class="img-fluid"
+                            alt=""></a>
+                </div>
+                <div class="col-lg-6 product-details pl-md-5 ftco-animate">
+                    <h3>
+                        <%= p.title %>
+                    </h3>
+                    <p class="price"><span>$<%= parseFloat(p.price).toFixed(2) %></span></p>
+                    <p><%= p.desc %>.
+                    </p>
+                    <!-- <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="form-group d-flex">
+                                <div class="select-wrap">
+                                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                    <select name="" id="" class="form-control">
+                                        <option value="">Small</option>
+                                        <option value="">Medium</option>
+                                        <option value="">Large</option>
+                                        <option value="">Extra Large</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="input-group col-md-6 d-flex mb-3">
+                            <span class="input-group-btn mr-2">
+                                <button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
+                                    <i class="ion-ios-remove"></i>
+                                </button>
+                            </span>
+                            <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1"
+                                min="1" max="100">
+                            <span class="input-group-btn ml-2">
+                                <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
+                                    <i class="ion-ios-add"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-md-12">
+                            <p style="color: #000;">600 kg available</p>
+                        </div>
+                    </div> -->
+                    <% if (loggedIn) { %>
+                        <p><a href="/cart/add/<%= p.slug %>" class="btn btn-black py-3 px-5">Add to Cart</a></p>
+                    <% } else { %>
+                        <p style="color: red; font-weight: bold;">You must be logged in to purchase items.</p>
+                    <% } %>
+                </div>
+                <div class="col-lg-12">
+                    <ul class="gallery">
+                        <% galleryImages.forEach(function(image) { %>
+                         <% if (image != "thumbs") { %>
+                          <li>
+                              <a data-fancybox="gallery" class="image-popup" href="../../../backend/product_images/<%= p.id %>/gallery/<%= image %>">
+                                <img src="../../../backend/product_images/<%= p.id %>/gallery/thumbs/<%= image %>">
+                            </a>
+                          </li>
+                         <% } %>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%- include ("_layouts/footer") %>

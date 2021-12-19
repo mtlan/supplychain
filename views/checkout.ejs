@@ -1,0 +1,125 @@
+<%- include ("_layouts/header") %>
+<div class="hero-wrap hero-bread" style="background-image: url('../frontend/images/bg_1.jpg');">
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center">
+            <p class="breadcrumbs"><span class="mr-2"><a href="/">Home</a></span> <span>Cart</span></p>
+          <h1 class="mb-0 bread">My Cart</h1>
+        </div>
+      </div>
+    </div>
+  </div><br><br>
+    <div class="ajaxbg">
+        <div class="ajaxinner">
+            <h3>You are now being redirected to paypal...</h3>
+            <img src="../../../frontend/images/ajax-loader.gif" alt="">
+        </div>
+    </div>
+    <% if (typeof cart !=="undefined" ) { %>
+        <section class="ftco-section ftco-cart">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 ftco-animate">
+                        <div class="cart-list">
+                            <table class="table">
+                                <thead class="thead-primary">
+                                    <tr class="text-center">
+                                        <th>&nbsp;</th>
+                                        <th>Image</th>
+                                        <th>Product name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% var total = 0 %> 
+                                    <% cart.forEach(function(product) { %>
+                                    <% var sub = parseFloat(product.qty * product.price).toFixed(2) %> 
+                                    <% total += +sub %> 
+                                        <tr class="text-center">
+                                            <td class="product-remove"><a href="/cart/update/<%= product.title %>?action=clear"><span class="ion-ios-close"></span></a>
+                                            </td>
+    
+                                            <td class="image-prod">
+                                                <img class="img" src="<%= product.image %>" alt="">
+                                            </td>
+    
+                                            <td class="product-name">
+                                                <h3><%= product.title %></h3>
+                                            </td>
+    
+                                            <td class="price"><%= product.price %></td>
+    
+                                            <td class="quantity">
+                                                <a href="/cart/update/<%= product.title %>?action=add">+</a>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" name="quantity"
+                                                        class="quantity form-control input-number" value="<%= product.qty %>" min="1"
+                                                        max="100">
+                                                </div>
+                                                <a href="/cart/update/<%= product.title %>?action=remove">-</a>
+                                            </td>
+                                            <td class="total">$<%= sub %></td>
+                                        </tr><!-- END TR-->
+                                    <% }) %>
+                                        <tr>
+                                            <td colspan="6"><b>Total: </b>$<%= parseFloat(total).toFixed(2) %></td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-end">
+                    <div class="mr-5 mt-5 cart-wrap ftco-animate">
+                        <p><a href="/cart/clear" class="clearcart btn btn-danger py-3 px-4">Clear cart</a></p>
+                    </div>
+                    <div class="mt-5 cart-wrap ftco-animate">
+                        <p><a href="#" class="btn btn-primary py-3 px-4 buynow">Buy now</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <form class="pp" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+            <input type="hidden" name="cmd" value="_cart">
+            <input type="hidden" name="upload" value="1">
+            <input type="hidden" name="business" value="beu123k@gmail.com">
+            <% var num = 0; %> 
+            <% cart.forEach(function(p) { %>
+                <% num++ %>
+                <input type="hidden" name="item_name_<%= num %>" value="<%= p.title %>">
+                <input type="hidden" name="amount_<%= num %>" value="<%= p.price %>">
+                <input type="hidden" name="quantity_<%= num %>" value="<%= p.qty %>">
+            <% }); %>
+            <input type="hidden" name="currency_code" value="USD">
+            <input type="hidden" name="amount" value="<%= total %>">
+            <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_buynow_107x26.png" alt="Buy Now">
+        </form>
+
+        <% } else { %>
+            <h3 class="text-center">Your cart is empty.</h3><br><br>
+            <% } %>
+
+            <script src="../../../frontend/js/jquery.min.js"></script>
+            <script>
+                $(function() {
+                    $('a.clearcart').on('click', function () {
+                        if(!confirm('Confirm clear cart'))
+                            return false;
+                    });
+                });
+
+                $(function() {
+                    $('a.buynow').on('click', function (e) {
+                        e.preventDefault();
+
+                        $.get('/cart/buynow', function(){
+                            $('form.pp input[type=image]').click();
+                            $('.ajaxbg').show();
+                        });
+                    });
+                });
+            </script>
+                <%- include ("_layouts/footer") %>

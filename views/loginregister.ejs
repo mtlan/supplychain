@@ -1,0 +1,69 @@
+<link rel="stylesheet" href="../../../frontend/css/signinregister.css">
+<%- include ("_layouts/header") %>
+
+    <section class="ftco-section ftco-category ftco-no-pt">
+        <div class="container">
+            <div class="slider owl-carousel">
+                <div class="card">
+                    <div class="img">
+                        <img src="../../../frontend/images/customer.jpg" alt="">
+                    </div>
+                    <div class="content">
+                        <div class="title">
+                            Customer</div>
+                        <div class="sub-title">
+                            _______________</div>
+                        <p>Consumers can login or register to our website by clicking the consumer button and can check where the produce in their hand comes from</p>
+                        <div class="btn">
+                            <a href="/users/customer/login">
+                                <button>Consumer</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="img">
+                        <img src="../../../frontend/images/regulatory.jpg" alt="">
+                    </div>
+                    <div class="content">
+                        <div class="title">
+                            Regulatory authority</div>
+                        <div class="sub-title">
+                            _________________</div>
+                        <p>Regulatory authorities login to our website by clicking on authority button and can view farmer's produce and quality control</p>
+                        <div class="btn">
+                            <a href="/users/regulatory/login">
+                                <button>Regulatory authority</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="img">
+                        <img src="../../../frontend/images/farmer.jpg" alt="">
+                    </div>
+                    <div class="content">
+                        <div class="title">
+                            Farmer</div>
+                        <div class="sub-title">
+                            _______________</div>
+                        <p>Farmers can login or register to our website by clicking the farmer button to register agricultural product information.</p>
+                        <div class="btn">
+                            <a href="/users/farmer/login">
+                                <button>Farmer</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <%- include ("_layouts/footer") %>
+        <script>
+            $(".slider").owlCarousel({
+                loop: true,
+                autoplay: true,
+                autoplayTimeout: 5000, //5000ms = 5s;
+                autoplayHoverPause: true,
+            });
+        </script>

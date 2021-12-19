@@ -1,0 +1,73 @@
+<%- include ("_layouts/header") %>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-7 ftco-animate">
+                    <h3 class="mb-4 billing-heading">Quality Testing</h3>
+                    <div class="row align-items-end">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="firstname">Farmer ID</label>
+                                <input type="text" class="form-control" placeholder="" id="fid">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <table>
+                                <tr>
+                                    <td><b><label class="black">Farmer Name : </label></td>
+                                    <td><label class="black" span id="getval2"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b><label class="black">Planting Address : </label></td>
+                                    <td><label class="black" span id="getval3"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b><label class="black">Crop name : </label></td>
+                                    <td><label class="black" span id="getval4"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b><label class="black">Phone : </label></td>
+                                    <td><label class="black" span id="getval5"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b><label class="black">Quantity : </label></td>
+                                    <td><label class="black" span id="getval6"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><b><label class="black">Expected Price : </label>
+                                    <td><label class="black" span id="getval7"></label></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <p><button class="btn btn-primary py-3 px-4 mr-5" id="getvalue">Get Value</button></p>
+                        <p><a href="/users/regulatory/approve" class="btn btn-primary py-3 px-4">Evaluate</a></p>
+                    </div>
+                    <!-- <p><button class="btn btn-primary py-3 px-4 mr-5" id="printBlock">Print Block</button></p>
+                    <h4> Block Number : <span class="blockclass" span id="blocknum"> </span></h4> -->
+                </div>
+                <div class="col-xl-5">
+                    <div class="row mt-5 pt-3">
+                        <div class="col-md-12 d-flex mb-5">
+                            <div class="cart-detail cart-total p-3 p-md-4">
+                                <img src="https://baokinhte.net/wp-content/uploads/2021/01/gia-nong-san.jpg"
+                                    class="img-fluid" alt="Responsive image">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="cart-detail cart-total p-3 p-md-4">
+                                <img src="https://baokinhte.net/wp-content/uploads/2021/01/gia-nong-san.jpg"
+                                    class="img-fluid" alt="Responsive image">
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- .col-md-8 -->
+            </div>
+        </div>
+    </section> <!-- .section -->
+
+    <%- include ("_layouts/footer") %>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="../../process.js"></script>
+        <!-- nhúng thư viện web3 -->
+        <script src="../../scripts/web3.js"></script>

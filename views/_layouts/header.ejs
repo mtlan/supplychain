@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- <title>Vegefoods</title> -->
+	<title>
+		<%= title %>
+	</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
+		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="../../../frontend/css/open-iconic-bootstrap.min.css">
+	<link rel="stylesheet" href="../../../frontend/css/animate.css">
+
+	<link rel="stylesheet" href="../../../frontend/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../../../frontend/css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="../../../frontend/css/magnific-popup.css">
+
+	<link rel="stylesheet" href="../../../frontend/css/aos.css">
+
+	<link rel="stylesheet" href="../../../frontend/css/ionicons.min.css">
+
+	<link rel="stylesheet" href="../../../frontend/css/bootstrap-datepicker.css">
+	<link rel="stylesheet" href="../../../frontend/css/jquery.timepicker.css">
+
+	<link rel="stylesheet" href="../../../frontend/css/flaticon.css">
+	<link rel="stylesheet" href="../../../frontend/css/icomoon.css">
+	<link rel="stylesheet" href="../../../frontend/css/style.css">
+
+	<!-- file tạo -->
+	<link rel="stylesheet" href="../../../frontend/css/main.css">
+</head>
+<body class="goto-here">
+	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+		<div class="container">
+			<a class="navbar-brand" href="/">PTH-MTL-NNNP</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+				aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="oi oi-menu"></span> Menu
+			</button>
+
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav ml-auto">
+					<!-- khi thêm page mới, ở trang home sẽ ko hiện ra phải run lại -->
+					<% pages.forEach(function(page) { %>
+						<% if (page.slug=="home" ) { %>
+							<li class="nav-item"><a href="/" class="nav-link">
+									<%= page.title %>
+								</a></li>
+							<% } else { %>
+								<li class="nav-item"><a href="<%= page.slug %>" class="nav-link">
+										<%= page.title %>
+									</a></li>
+								<% } %>
+									<% }) %>
+										<!-- check cart not undefined -->
+										<li class="nav-item cta cta-colored"><a href="/cart/checkout"
+												class="nav-link"><span class="icon-shopping_cart"></span>[<% if (typeof
+													cart !=="undefined" ) { %>
+													<%= cart.length %>
+														<% } else { %>0<% } %>]</a></li>
+								
+										<% if (user) { %>
+										<li class="nav-item dropdown">
+											<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, <%= user.username %></a>
+											<div class="dropdown-menu" aria-labelledby="dropdown04">
+												<a class="dropdown-item" href="/users/customer/track">Produce traceability</a>
+												<a class="dropdown-item" href="/users/logout">Logout</a>
+											</div>
+										</li>
+ 										<% } else { %>
+											<li class="nav-item"><a href="/users/role" class="nav-link">Login</a>
+										</li>
+										<% } %>
+										<% if (user && user.admin == 0) { %>
+											<li class="nav-item"><a href="/admin/pages/dashboard" class="nav-link">Admin Area</a>
+										</li>
+ 										<% } %>
+
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<%- messages('messages', locals) %>
+
+		<% if (errors) {%>
+			<% errors.forEach(function(error){ %>
+				<div class="alert alert-danger">
+					<%- error.msg %>
+				</div>
+				<% }); %>
+					<% }%>
+
+						<!-- END nav -->
+
+
+</body>
+
+</html>

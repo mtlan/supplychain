@@ -1,0 +1,61 @@
+<!-- <% if (user) { %>
+    <%= user.username %>
+    <p><%= user.name %></p>
+<% } %> -->
+
+
+<%- include ("_layouts/header") %>
+
+    <style>
+        .test111 {
+            display: flex;
+        }
+    </style>
+    <section style="margin-top: 20px;">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-12 test111">
+                    <h2 class="ftco-heading-2">Welcome Authority</h2>
+                    <img src="../../../frontend/images/authotity.png" alt="">
+                </div>
+                <div class="col-md-12 test111">
+                    <h5 class="ftco-heading-2">Name: <%= user.name %></h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="">
+        <div class="container">
+            <div class="row no-gutters ftco-services">
+                <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
+                    <div class="media block-6 services mb-md-0 mb-4">
+                        <a href="/users/regulatory/qualitytesting">
+                            <div class="icon bg-color-1 active d-flex justify-content-center align-items-center mb-2">
+                                <img src="../../../frontend/images/quality.png" alt="">
+                            </div>
+                            <div class="media-body">
+                                <h3 class="heading">Quality Testing</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
+                    <div class="media block-6 services mb-md-0 mb-4">
+                        <a href="/users/regulatory/approve">
+                            <div class="icon bg-color-1 active d-flex justify-content-center align-items-center mb-2">
+                                <img src="../../../frontend/images/approve.png" alt="">
+                            </div>
+                            <div class="media-body">
+                                <h3 class="heading">Approve</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <%- include ("_layouts/footer") %>

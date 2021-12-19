@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./frontend/css/signinregister.css">
+    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+</head>
+
+<body>
+    <div class="slider owl-carousel">
+        <div class="card">
+            <div class="img">
+                <img src="./frontend/images/customer.jpg" alt=""></div>
+            <div class="content">
+                <div class="title">
+                    Customer</div>
+                <div class="sub-title">
+                    _______________</div>
+                <p>Người tiêu dùng có thể đăng nhập hoặc đăng ký vào trang web của chúng tôi bằng cách nhấp vào nút người tiêu dùng và có thể kiểm tra xem nông sản trong tay họ có nguồn gốc từ đâu
+                </p>
+                <div class="btn">
+                    <a href="/customerlogin">
+                        <button>Consumer</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="img">
+                <img src="./frontend/images/regulatory.jpg" alt=""></div>
+            <div class="content">
+                <div class="title">
+                    Regulatory authority</div>
+                <div class="sub-title">
+                    _________________</div>
+                <p>
+                    Cơ quan quản lý đăng nhập vào trang web của chúng tôi bằng cách nhấp vào nút cơ quan quản lý và có thể xem nông sản của người nông dân và kiểm định chất lượng</p>
+                <div class="btn">
+                    <a href="/regulatorylogin">
+                        <button>Regulatory authority</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="img">
+                <img src="./frontend/images/farmer.jpg" alt=""></div>
+            <div class="content">
+                <div class="title">
+                    Farmer</div>
+                <div class="sub-title">
+                    _______________</div>
+                <p>
+                    Người nông dân có thể đăng nhập hoặc đăng ký vào trang web của chúng tôi bằng cách nhấp vào nút người nông dân để đăng kí thông tin nông sản</p>
+                <div class="btn">
+                    <a href="/farmerlogin">
+                        <button>Farmer</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(".slider").owlCarousel({
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 5000, //5000ms = 5s;
+            autoplayHoverPause: true,
+        });
+    </script>
+    <!--<div class="bordersep"></div>
+    <footer>
+        <div class=" footer-container">
+            <div class="left-col">
+                <!--<img src="logo.png" alt="" class="logo">
+    <h1>F<span>akeQuipo</span></h1>
+    <div class="social-media">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fas fa-envelope"></i></a>
+    </div>
+    <p class="rights-text">© 2020 Created By De_facto Crypters All Rights Reserved.</p>
+    </div>
+
+    <div class="right-col">
+        <h1>Our Newsletter</h1>
+
+        <p>Enter Your Email to get our news and updates.</p>
+        <form action="" class="newsletter-form">
+            <input type="text" class="txtbx" placeholder="Enter Your Email">
+            <input type="submit" class="btnsubmit" placeholder="submit">
+        </form>
+    </div>
+    </div>
+    </footer> -->
+
+</body>
+
+
+</html>
+
+
+
+<!-- file formdangki -->
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="row">
+                    <div class="col-4 mt-2">
+                        <img src="https://baokinhte.net/wp-content/uploads/2021/01/gia-nong-san.jpg" class="img-fluid"
+                            alt="Responsive image">
+                    </div>
+                    <div class="col-8">
+                        <div class="col-12">
+                            <h1>Đăng kí cây trồng</h1>
+                        </div>
+                        
+                            <div class="col-md-12">
+                                <label for="" class="form-label">Id nông dân</label>
+                                <input type="text" class="form-control" id="farmerid">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="" class="form-label">Tên nông dân</label>
+                                <input type="text" class="form-control" id="farmername">
+                            </div>
+                            <div class="col-12">
+                                <label for="" class="form-label">Địa chỉ</label>
+                                <input type="text" class="form-control" id="farmeraddress" placeholder="Địa chỉ nơi trồng">
+                            </div>
+                            <div class="col-12">
+                                <label for="" class="form-label">Tên cây trồng</label>
+                                <input type="text" class="form-control" id="cropname" placeholder="Tên cây trồng">
+                            </div>
+                            <div class="col-12">
+                                <label for="" class="form-label">Số điện thoại</label>
+                                <input type="text" class="form-control" id="farmerphone" placeholder="Số điện thọai">
+                            </div>
+                            <div class="col-12">
+                                <label for="" class="form-label">Số lượng</label>
+                                <input type="number" class="form-control" id="quantity" placeholder="Số lượng">
+                            </div>
+                            <div class="col-12">
+                                <label for="" class="form-label">Giá dự kiến</label>
+                                <input type="number" class="form-control" id="price" placeholder="Giá dự kiến">
+                            </div>
+
+                            <!-- <div class="col-md-6">
+                                <label for="inputCity" class="form-label">City</label>
+                                <input type="text" class="form-control" id="inputCity">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputState" class="form-label">State</label>
+                                <select id="inputState" class="form-select">
+                                    <option selected>Choose...</option>
+                                    <option>...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="inputZip" class="form-label">Zip</label>
+                                <input type="text" class="form-control" id="inputZip">
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Check me out
+                                    </label>
+                                </div>
+                            </div> -->
+                            <div class="col-12">
+                                <button id="addvalue" class="btn btn-primary">Đăng kí</button>
+                            </div>
+                            <div class="col-12">
+                                <button id="connectMM" class="btn btn-primary">Metamark</button>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./process.js"></script>
+    <!-- nhúng thư viện web3 -->
+    <script src="./scripts/web3.js"></script>
+
+</body>
+
+</html>
