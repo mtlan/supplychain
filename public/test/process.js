@@ -1,6 +1,11 @@
 
 var abi = [
 	{
+		"inputs": [],
+		"stateMutability": "payable",
+		"type": "constructor"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "string",
@@ -180,6 +185,44 @@ var abi = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "balanceETH",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "balances",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "countFarmer",
 		"outputs": [
@@ -195,6 +238,58 @@ var abi = [
 	{
 		"inputs": [],
 		"name": "countLot",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "fundaddrETH",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "addr",
+				"type": "address"
+			}
+		],
+		"name": "fundaddrUSD",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getBalanceETH",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "addr",
+				"type": "address"
+			}
+		],
+		"name": "getBalanceUSD",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -297,10 +392,90 @@ var abi = [
 		],
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "receiver",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "sender",
+				"type": "address"
+			}
+		],
+		"name": "sendCoin",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "sufficient",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address payable",
+				"name": "receiver",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "sendETH",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "tongTien",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "withdrawETH",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
 ];
 
-var addressSM = "0xDbDA8532508A78768e67A8c6111333522Cd1ca85";
+var addressSM = "0xA7fedD9C9F3cb1adA346943AA5d073C194A5266F";
 
 var currentAccount = "";
 
@@ -313,6 +488,8 @@ $(document).ready(function(){
     console.log(contract_MM);
 
     checkMM();
+
+	refresh();
 
     $("#connectMM").click(function(){
         connectMM().then((data)=>{
@@ -432,7 +609,81 @@ $(document).ready(function(){
             }
         })
     });
+
+	$('#fund').click(function(){
+
+		var depositETH = document.getElementById("depositETH").value;
+
+		// contract_MM.methods.fundaddr(currentAccount, web3.utils.toWei(web3.utils.toBN(valueETH), 'Ether')).send({
+		// 	from: currentAccount
+		// });
+
+		contract_MM.methods.fundaddrETH().send({
+			from: currentAccount,
+			value: web3.utils.toWei(web3.utils.toBN(depositETH), 'Ether')
+		});
+	
+		setTimeout(function(){
+			refresh();
+		}, 8000);	
+	});
+
+	$('#withdraw').click(function(){
+		contract_MM.methods.withdrawETH().send({
+			from: currentAccount,
+		});
+
+		setTimeout(function(){
+			refresh();
+		}, 8000);
+	});
+
+	$('#fundfarmer').click(function(){
+		var addressfm = document.getElementById("addressfm").value;
+        var lotid = document.getElementById("lotid").value;
+        var valueETH = document.getElementById("valueETH").value;
+
+		// contract_MM.utils.toWei(value, 'ether').sendCoin(addressfm, value, currentAccount).send({
+		// 	from: currentAccount
+		// }).then(function(data){
+		// 	console.log("ok");
+		// });
+		var _valueETH = web3.utils.toWei(valueETH, 'Ether');
+		
+		contract_MM.methods.sendETH(addressfm, _valueETH).send({
+			from: currentAccount,
+		}).then(function(data){
+			console.log("ok");
+		});
+		
+		setTimeout(function(){
+			refresh();
+			addressfm = "";
+			lotid = "";
+			valueETH = "";
+		}, 8000);
+
+        // contract_MM.methods.addquantity(lotid, idfm, grade, mrp, testdate, expdate).send({
+        //     from: currentAccount
+        // });
+	});
 });
+
+function refresh(){
+	var balance = document.getElementById("balance");
+
+	var web3 = new Web3(window.ethereum);
+    window.ethereum.enable();
+    var contract_MM = new web3.eth.Contract(abi, addressSM);
+
+	contract_MM.methods.getBalanceETH().call({
+		from: currentAccount
+	}).then(function(value){
+		console.log(value);
+		balance.innerHTML = web3.utils.fromWei(web3.utils.toBN(value), 'Ether');
+		console.log("Balance Updated!");
+	});
+}
 
 function track(){
     var fid1 = document.getElementById("fid1").value;

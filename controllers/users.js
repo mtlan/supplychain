@@ -325,12 +325,22 @@ router.get("/regulatory/approve", isAuthority, function(req, res){
 });
 
 /*
-* GET approve
+* GET Produce Traceability
 */
-router.get("/customer/track", isUser, function(req, res){
+router.get("/track", function(req, res){
 
     res.render("track",{
-        title: 'Track'
+        title: 'Produce Traceability'
+    });
+});
+
+/*
+* GET micro finance
+*/
+router.get("/fund", function(req, res){
+
+    res.render("fund",{
+        title: 'Micro Finance'
     });
 });
 
