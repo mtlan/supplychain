@@ -8,8 +8,15 @@
                     <div class="row align-items-end">
                         <div class="col-md-12">
                             <div class="form-group">
+                                <input type="file" id="file" name="file">
+                                <!-- <button class="btn" onclick="val();">submit</button> -->
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <label for="firstname">Farmer ID</label>
                                 <input type="text" class="form-control" placeholder="" id="fid">
+                                <p style="display: none;">Qr Content: <span id="content"></span></p>
                             </div>
                         </div>
                         <div class="col-md-12 mb-5">
@@ -69,5 +76,13 @@
     <%- include ("_layouts/footer") %>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="../../process.js"></script>
+        <script>
+            function val(){
+                var item=document.getElementById("content").innerText;
+                document.getElementById("fid").value = item;
+            }
+        </script>
+        <!-- qr code javascript -->
+        <script src="../../qrReader.js"></script>
         <!-- nhúng thư viện web3 -->
         <script src="../../scripts/web3.js"></script>

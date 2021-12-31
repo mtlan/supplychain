@@ -98,7 +98,7 @@
                         <% categories.forEach(function(c) { %>
                             <div class="col-md-4">
                                 <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
-                                    style="background-image: url(./frontend/images/category-3.jpg);">
+                                    style="background-image: url(../../../backend/category_images/<%= c.id %>/<%= c.image %>)">
                                     <div class="text px-3 py-1">
                                         <h2 class="mb-0"><a href="/products/<%= c.slug %>">
                                                 <%= c.title %>

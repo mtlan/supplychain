@@ -265,7 +265,7 @@ var abi = [
 		],
 		"name": "fundaddrUSD",
 		"outputs": [],
-		"stateMutability": "payable",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -409,6 +409,24 @@ var abi = [
 	{
 		"inputs": [
 			{
+				"internalType": "address payable",
+				"name": "receiver",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "sendETH",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "receiver",
 				"type": "address"
@@ -424,7 +442,7 @@ var abi = [
 				"type": "address"
 			}
 		],
-		"name": "sendCoin",
+		"name": "sendUSD",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -432,24 +450,6 @@ var abi = [
 				"type": "bool"
 			}
 		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address payable",
-				"name": "receiver",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			}
-		],
-		"name": "sendETH",
-		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -475,7 +475,7 @@ var abi = [
 	}
 ];
 
-var addressSM = "0xA7fedD9C9F3cb1adA346943AA5d073C194A5266F";
+var addressSM = "0xe09E34A8f62afC1860b20fC873f1b5717F753977";
 
 var currentAccount = "";
 
@@ -499,12 +499,35 @@ $(document).ready(function(){
             var SenderBalance = document.getElementById("SenderBalance");
             // var str = web3.toAscii(value[1]);
             SenderBalance.innerHTML = currentAccount;
+
         }).catch((err)=>{
             console.log(err);
         });
     });
 
-    $("#addvalue").click(function(){
+	$("#connectMMUSD").click(function(){
+        connectMM().then((data)=>{
+            // console.log(data);
+            currentAccount = data[0];
+            console.log(currentAccount);
+            var SenderBalance = document.getElementById("SenderBalance");
+            // var str = web3.toAscii(value[1]);
+            SenderBalance.innerHTML = currentAccount;
+
+			contract_MM.methods.fundaddrUSD(currentAccount).send({
+				from: currentAccount
+			});
+
+			setTimeout(function(){
+				refreshU();
+			}, 8000);
+
+        }).catch((err)=>{
+            console.log(err);
+        });
+    });
+
+    $("#addvalue").click(function(e){
         var _faid = document.getElementById("farmerid").value;
         var _tennongdan = document.getElementById("farmername").value;
         var _diachi = document.getElementById("farmeraddress").value;
@@ -516,9 +539,29 @@ $(document).ready(function(){
         contract_MM.methods.addFarmer(_faid, _tennongdan, _diachi, _nongsan, _sodienthoai, _soluong, _giadukien).send({
             from: currentAccount
         });
-    });
 
+		// test qr code
+		// alert(_faid);
+
+		var qrcode = new QRCode(document.getElementById("qrcode"), {
+			text: _faid,
+			width: 128,
+			height: 128,
+			colorDark : "#000000",
+			colorLight : "#ffffff",
+			correctLevel : QRCode.CorrectLevel.M
+		});
+ 
+		// e.preventDefault();  //stop the browser from following
+    	// window.location.href = '../../../frontend/qrcode/q1.png';
+			
+
+    });
+	
     $("#getvalue").click(function(){
+		var item=document.getElementById("content").innerText;
+        document.getElementById("fid").value = item;
+
         var fid = document.getElementById("fid").value;
 
         contract_MM.methods.getFarmer(fid).call({
@@ -667,6 +710,31 @@ $(document).ready(function(){
         //     from: currentAccount
         // });
 	});
+
+	$('#fundfarmerUSD').click(function(){
+		var addressfm = document.getElementById("addressfm").value;
+        var lotid = document.getElementById("lotid").value;
+        var valueUSD = document.getElementById("valueUSD").value;
+
+		// contract_MM.utils.toWei(value, 'ether').sendCoin(addressfm, value, currentAccount).send({
+		// 	from: currentAccount
+		// }).then(function(data){
+		// 	console.log("ok");
+		// });
+		
+		
+		contract_MM.methods.sendUSD(addressfm, valueUSD, currentAccount).send({
+			from: currentAccount,
+		}).then(function(data){
+			console.log("ok");
+		});
+		
+		refreshU();
+
+        // contract_MM.methods.addquantity(lotid, idfm, grade, mrp, testdate, expdate).send({
+        //     from: currentAccount
+        // });
+	});
 });
 
 function refresh(){
@@ -682,6 +750,21 @@ function refresh(){
 		console.log(value);
 		balance.innerHTML = web3.utils.fromWei(web3.utils.toBN(value), 'Ether');
 		console.log("Balance Updated!");
+	});
+}
+
+function refreshU(){
+	var balanceUSD = document.getElementById("balanceUSD");
+
+	var web3 = new Web3(window.ethereum);
+    window.ethereum.enable();
+    var contract_MM = new web3.eth.Contract(abi, addressSM);
+
+	contract_MM.methods.getBalanceUSD(currentAccount).call({
+		from: currentAccount
+	}).then(function(value){
+		console.log(value);
+		balanceUSD.innerHTML = value;
 	});
 }
 

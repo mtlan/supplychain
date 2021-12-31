@@ -344,5 +344,12 @@ router.get("/fund", function(req, res){
     });
 });
 
+router.get("/fundusd", function(req, res){
+
+    res.render("fundUSD",{
+        title: 'Micro Finance'
+    });
+});
+
 // Exports cho biến router
 module.exports = router;

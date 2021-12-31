@@ -52,6 +52,9 @@
                                     <input type="text" class="form-control" placeholder="" id="price">
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <p><div id="qrcode"></div></p>
+                            </div>
                             <p><button class="btn btn-primary py-3 px-4 mr-5" id="addvalue">Submit</button></p>
                             <p><button class="btn btn-danger py-3 px-4" id="connectMM">Connect Metamark</button></p>
                         </div>
@@ -79,5 +82,7 @@
     <%- include ("_layouts/footer") %>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../process.js"></script>
+    <!-- qr code javascript -->
+    <script src="../../qrcode.min.js"></script>
     <!-- nhúng thư viện web3 -->
     <script src="../../scripts/web3.js"></script>
