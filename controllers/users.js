@@ -335,7 +335,7 @@ router.get("/track", function(req, res){
 });
 
 /*
-* GET micro finance
+* GET micro finance as ETH
 */
 router.get("/fund", function(req, res){
 
@@ -344,6 +344,9 @@ router.get("/fund", function(req, res){
     });
 });
 
+/*
+* GET micro finance as USD
+*/
 router.get("/fundusd", function(req, res){
 
     res.render("fundUSD",{

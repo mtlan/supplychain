@@ -475,7 +475,7 @@ var abi = [
 	}
 ];
 
-var addressSM = "0xe09E34A8f62afC1860b20fC873f1b5717F753977";
+var addressSM = "0xF75c3DBfeA9f637cB0867655dECdCD37b479dAf9";
 
 var currentAccount = "";
 
@@ -638,6 +638,7 @@ $(document).ready(function(){
         });
     });
 
+	// bỏ
     $("#btnFund").click(function(){
         // alert("ok");
         $.post("./investment",{
@@ -652,14 +653,11 @@ $(document).ready(function(){
             }
         })
     });
+	// bỏ
 
 	$('#fund').click(function(){
 
 		var depositETH = document.getElementById("depositETH").value;
-
-		// contract_MM.methods.fundaddr(currentAccount, web3.utils.toWei(web3.utils.toBN(valueETH), 'Ether')).send({
-		// 	from: currentAccount
-		// });
 
 		contract_MM.methods.fundaddrETH().send({
 			from: currentAccount,
@@ -686,11 +684,6 @@ $(document).ready(function(){
         var lotid = document.getElementById("lotid").value;
         var valueETH = document.getElementById("valueETH").value;
 
-		// contract_MM.utils.toWei(value, 'ether').sendCoin(addressfm, value, currentAccount).send({
-		// 	from: currentAccount
-		// }).then(function(data){
-		// 	console.log("ok");
-		// });
 		var _valueETH = web3.utils.toWei(valueETH, 'Ether');
 		
 		contract_MM.methods.sendETH(addressfm, _valueETH).send({
@@ -706,22 +699,12 @@ $(document).ready(function(){
 			valueETH = "";
 		}, 8000);
 
-        // contract_MM.methods.addquantity(lotid, idfm, grade, mrp, testdate, expdate).send({
-        //     from: currentAccount
-        // });
 	});
 
 	$('#fundfarmerUSD').click(function(){
 		var addressfm = document.getElementById("addressfm").value;
         var lotid = document.getElementById("lotid").value;
         var valueUSD = document.getElementById("valueUSD").value;
-
-		// contract_MM.utils.toWei(value, 'ether').sendCoin(addressfm, value, currentAccount).send({
-		// 	from: currentAccount
-		// }).then(function(data){
-		// 	console.log("ok");
-		// });
-		
 		
 		contract_MM.methods.sendUSD(addressfm, valueUSD, currentAccount).send({
 			from: currentAccount,
@@ -729,11 +712,9 @@ $(document).ready(function(){
 			console.log("ok");
 		});
 		
-		refreshU();
-
-        // contract_MM.methods.addquantity(lotid, idfm, grade, mrp, testdate, expdate).send({
-        //     from: currentAccount
-        // });
+		setTimeout(function(){
+			refreshU();
+		}, 8000);
 	});
 });
 
