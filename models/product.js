@@ -22,6 +22,10 @@ var ProductSchema = mongoose.Schema({
         type: Number,
         require: true
     },
+    weight: {
+        type: String,
+        require: true
+    },
     image: {
         type: String,
     }

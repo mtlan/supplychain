@@ -353,6 +353,55 @@ var abi = [
 		"inputs": [
 			{
 				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			}
+		],
+		"name": "getFarmerName",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
 				"name": "j",
 				"type": "string"
 			}
@@ -475,7 +524,7 @@ var abi = [
 	}
 ];
 
-var addressSM = "0xF75c3DBfeA9f637cB0867655dECdCD37b479dAf9";
+var addressSM = "0x4C83538703c939450c2f1B019BF57e4a0f58eD7e";
 
 var currentAccount = "";
 

@@ -15,6 +15,7 @@
                         <tr>
                             <th>Title</th>
                             <th>Price</th>
+                            <th>Weight</th>
                             <th>Category</th>
                             <th>Image</th>
                             <th style="width:30px;"></th>
@@ -35,6 +36,9 @@
                                         });
                                         numberFormat.format(product.price);
                                     %> -->
+                                </td>
+                                <td>
+                                    <%= product.weight %>
                                 </td>
                                 <td>
                                     <%= product.category %>

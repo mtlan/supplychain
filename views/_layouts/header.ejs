@@ -35,6 +35,7 @@
 	<!-- file tạo -->
 	<link rel="stylesheet" href="../../../frontend/css/main.css">
 </head>
+
 <body class="goto-here">
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
@@ -49,45 +50,48 @@
 					<!-- khi thêm page mới, ở trang home sẽ ko hiện ra phải run lại -->
 					<% pages.forEach(function(page) { %>
 						<% if (page.slug=="home" ) { %>
-							<li class="nav-item"><a href="/" class="nav-link">
-									<%= page.title %>
-								</a></li>
-							<% } else { %>
-								<li class="nav-item"><a href="<%= page.slug %>" class="nav-link">
-										<%= page.title %>
-									</a></li>
-								<% } %>
-									<% }) %>
+							<li class="nav-item">
+								<a href="/" class="nav-link"><%= page.title %></a>
+							</li>
+						<% } else { %>
+							<li class="nav-item">
+								<a href="<%= page.slug %>" class="nav-link"><%= page.title %></a>
+							</li>
+						<% } %>
+					<% }) %>
 										<!-- check cart not undefined -->
 										<li class="nav-item cta cta-colored"><a href="/cart/checkout"
 												class="nav-link"><span class="icon-shopping_cart"></span>[<% if (typeof
 													cart !=="undefined" ) { %>
 													<%= cart.length %>
 														<% } else { %>0<% } %>]</a></li>
-								
+
 										<% if (user) { %>
-										<li class="nav-item dropdown">
-											<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, <%= user.username %></a>
-											<div class="dropdown-menu" aria-labelledby="dropdown04">
-												<a class="dropdown-item" href="/users/track">Produce traceability</a>
-												<a class="dropdown-item" href="/users/logout">Logout</a>
-											</div>
-										</li>
- 										<% } else { %>
-											<li class="nav-item"><a href="/users/role" class="nav-link">Login</a>
-										</li>
-										<% } %>
-										<% if (user && user.admin == 0) { %>
-											<li class="nav-item"><a href="/admin/pages/dashboard" class="nav-link">Admin Area</a>
-										</li>
- 										<% } %>
+											<li class="nav-item dropdown">
+												<a class="nav-link dropdown-toggle" href="#" id="dropdown04"
+													data-toggle="dropdown" aria-haspopup="true"
+													aria-expanded="false">Hi, <%= user.username %></a>
+												<div class="dropdown-menu" aria-labelledby="dropdown04">
+													<a class="dropdown-item" href="/users/track">Produce
+														traceability</a>
+													<a class="dropdown-item" href="/users/logout">Logout</a>
+												</div>
+											</li>
+											<% } else { %>
+												<li class="nav-item"><a href="/users/role" class="nav-link">Login</a>
+												</li>
+												<% } %>
+													<% if (user && user.admin==0) { %>
+														<li class="nav-item"><a href="/admin/pages/dashboard"
+																class="nav-link">Admin Area</a>
+														</li>
+														<% } %>
 
 				</ul>
 			</div>
 		</div>
 	</nav>
 	<%- messages('messages', locals) %>
-
 		<% if (errors) {%>
 			<% errors.forEach(function(error){ %>
 				<div class="alert alert-danger">

@@ -37,6 +37,7 @@ router.get("/add-product", isAdmin, function(req, res){
     var title = "";
     var desc = "";
     var price = "";
+    var weight = "";
 
     Category.find(function(err, cat){
         res.render('admin/add_product', {
@@ -44,6 +45,7 @@ router.get("/add-product", isAdmin, function(req, res){
             desc: desc,
             categories: cat,
             price: price,
+            weight: weight
         });
     });
 });
@@ -63,6 +65,7 @@ router.post("/add-product", function(req, res){
     req.checkBody('title', 'The product name cannot be empty.').notEmpty();
     req.checkBody('desc', 'Product description cannot be empty.').notEmpty();
     req.checkBody('price', 'Product price cannot be empty.').isDecimal();
+    req.checkBody('weight', 'Product weight cannot be empty.').notEmpty();
     // Kiểm tra file up lên có phải là đuôi .jpg, .jpeg, png
     req.checkBody('image', 'The uploaded image is not valid, please upload the correct image type').isImage(imageFile);
 
@@ -70,6 +73,7 @@ router.post("/add-product", function(req, res){
     var slug = title.replace(/\s+/g, '-').toLowerCase();
     var desc = req.body.desc;
     var price = req.body.price;
+    var weight = req.body.weight;
     var category = req.body.category;
 
     var errors = req.validationErrors();
@@ -83,6 +87,7 @@ router.post("/add-product", function(req, res){
                 desc: desc,
                 categories: cat,
                 price: price,
+                weight: weight
             });
         });
     }else{
@@ -97,6 +102,7 @@ router.post("/add-product", function(req, res){
                         desc: desc,
                         categories: cat,
                         price: price,
+                        weight: weight
                     });
                 });
             }else{
@@ -110,6 +116,7 @@ router.post("/add-product", function(req, res){
                     slug: slug,
                     desc: desc,
                     price: price2,
+                    weight: weight,
                     // price: price2.format(price),
                     category: category,
                     image: imageFile
@@ -181,6 +188,7 @@ router.get("/edit-product/:id", isAdmin, function(req, res){
                             categories: cat,
                             category: p.category.replace(/\s+/g, '-').toLowerCase(),
                             price: parseFloat(p.price).toFixed(2),
+                            weight: p.weight,
                             image: p.image,
                             galleryImages: galleryImages,
                             id: p._id
@@ -206,6 +214,7 @@ router.post("/edit-product/:id", function(req, res){
     req.checkBody('title', 'The product name cannot be empty.').notEmpty();
     req.checkBody('desc', 'Product description cannot be empty.').notEmpty();
     req.checkBody('price', 'Product price cannot be empty.').isDecimal();
+    req.checkBody('price', 'Product weight cannot be empty.').notEmpty();
     // Kiểm tra file up lên có phải là đuôi .jpg, .jpeg, png
     req.checkBody('image', 'The uploaded image is not valid, please upload the correct image type').isImage(imageFile);
 
@@ -213,6 +222,7 @@ router.post("/edit-product/:id", function(req, res){
     var slug = title.replace(/\s+/g, '-').toLowerCase();
     var desc = req.body.desc;
     var price = req.body.price;
+    var weight = req.body.weight;
     var category = req.body.category;
     var pimage = req.body.pimage;
     var id = req.params.id;
@@ -237,6 +247,7 @@ router.post("/edit-product/:id", function(req, res){
                     p.slug = slug;
                     p.desc = desc;
                     p.price = parseFloat(price).toFixed(2);
+                    p.weight = weight;
                     p.category = category;
                     if(imageFile != "") {
                         p.image = imageFile;

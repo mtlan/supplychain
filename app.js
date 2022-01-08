@@ -155,6 +155,8 @@ var port = 3000;  // Định nghĩa cổng để chạy ứng dụng NodeJS củ
 var adminPages = require('./controllers/admin_pages.js');
 var adminCategories = require('./controllers/admin_categories.js');
 var adminProducts = require('./controllers/admin_products.js');
+var adminUsers = require('./controllers/admin_users.js');
+
 var pages = require('./controllers/pages.js');
 var products = require('./controllers/products.js');
 var cart = require('./controllers/cart.js');
@@ -164,6 +166,8 @@ var users = require('./controllers/users.js');
 app.use('/admin/pages', adminPages);
 app.use('/admin/categories', adminCategories);
 app.use('/admin/products', adminProducts);
+app.use('/admin/users', adminUsers);
+
 app.use('/', pages);
 app.use('/products', products);
 app.use('/cart', cart);

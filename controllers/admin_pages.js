@@ -4,6 +4,16 @@ var router = express.Router();
 var auth = require('../config/auth');
 var isAdmin = auth.isAdmin;
 
+// GET product model
+var Product = require('../models/product');
+
+// GET user model
+var User = require('../models/user');
+// GET category model
+var Category = require('../models/category');
+// GET product model
+var Product = require('../models/product');
+
 var Page = require('../models/page');
 
 // router.get('/demo',function(req, res){
@@ -12,7 +22,38 @@ var Page = require('../models/page');
 
 // Link run http://localhost:3000/admin/pages/dashboard
 router.get("/dashboard", isAdmin, function(req, res){
-    res.render("admin/dashboard");
+
+    var count111;
+    User.count(function(err, u){
+        countu = u;
+    });
+
+    var countcat;
+    Category.count(function(err, cat){
+        countcat = cat;
+    });
+
+    var countpro;
+    Product.count(function(err, pro){
+        countpro = pro;
+    });
+
+    User.find(function(err, users){
+        Category.find(function(err, cat){
+            Product.find(function(err, pro){
+                res.render('admin/dashboard', {
+                    countu: countu,
+                    countcat: countcat,
+                    countpro: countpro
+                });
+            });
+        });
+    });
+
+    // res.render("admin/dashboard", {
+    //     count111: count111,
+    //     countpro: countpro
+    // });
 })
 // GET add page
 router.get("/add-page", isAdmin, function(req, res){
