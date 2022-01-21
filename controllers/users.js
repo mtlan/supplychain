@@ -80,7 +80,8 @@ router.post('/customer/register', function(req, res){
                     email: email,
                     username: username,
                     password: password,
-                    admin: 1
+                    admin: 1,
+                    created: Date.now()
                 });
 
                 bcrypt.genSalt(10, function(err, salt){
@@ -187,7 +188,8 @@ router.post('/farmer/register', function(req, res){
                     email: email,
                     username: username,
                     password: password,
-                    admin: 2
+                    admin: 2,
+                    created: Date.now()
                 });
 
                 bcrypt.genSalt(10, function(err, salt){

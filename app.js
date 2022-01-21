@@ -151,7 +151,7 @@ var port = 3000;  // Định nghĩa cổng để chạy ứng dụng NodeJS củ
 
 // require('./controllers/main')(app);
 
-// Require user route
+// Require user route, gọi file chứa route
 var adminPages = require('./controllers/admin_pages.js');
 var adminCategories = require('./controllers/admin_categories.js');
 var adminProducts = require('./controllers/admin_products.js');

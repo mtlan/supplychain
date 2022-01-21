@@ -15,8 +15,8 @@
                     <p class="price"><span>$<%= parseFloat(p.price).toFixed(2) %></span></p>
                     <p><%= p.desc %>.
                     </p>
-                    <!-- <div class="row mt-4">
-                        <div class="col-md-6">
+                    <div class="row mt-4">
+                        <!-- <div class="col-md-6">
                             <div class="form-group d-flex">
                                 <div class="select-wrap">
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
@@ -43,12 +43,12 @@
                                     <i class="ion-ios-add"></i>
                                 </button>
                             </span>
-                        </div>
+                        </div> -->
                         <div class="w-100"></div>
                         <div class="col-md-12">
-                            <p style="color: #000;">600 kg available</p>
+                            <p style="color: #000;"><%= p.weight %></p>
                         </div>
-                    </div> -->
+                    </div>
                     <% if (loggedIn) { %>
                         <p><a href="/cart/add/<%= p.slug %>" class="btn btn-black py-3 px-5">Add to Cart</a></p>
                     <% } else { %>

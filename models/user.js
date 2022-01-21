@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 
+// khai báo cấu trúc database sẽ lưu trữ
 // User Schema
 var UserSchema = mongoose.Schema({
     
@@ -21,6 +22,9 @@ var UserSchema = mongoose.Schema({
     },
     admin: {
         type: Number,
+    },
+    created: {
+        type: Date
     },
 });
 

@@ -1,9 +1,23 @@
 
 var abi = [
 	{
-		"inputs": [],
-		"stateMutability": "payable",
-		"type": "constructor"
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "_vi",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "_faid",
+				"type": "string"
+			}
+		],
+		"name": "SM_ban_data",
+		"type": "event"
 	},
 	{
 		"inputs": [
@@ -179,25 +193,6 @@ var abi = [
 				"internalType": "string",
 				"name": "_ngayhethan",
 				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "balanceETH",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -443,19 +438,6 @@ var abi = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address payable",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "address payable",
@@ -504,19 +486,6 @@ var abi = [
 	},
 	{
 		"inputs": [],
-		"name": "tongTien",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "withdrawETH",
 		"outputs": [],
 		"stateMutability": "nonpayable",
@@ -524,7 +493,8 @@ var abi = [
 	}
 ];
 
-var addressSM = "0x4C83538703c939450c2f1B019BF57e4a0f58eD7e";
+var addressSM = "0x152d96FC42258Fc9f4653F5cEF12da381a8f0c73";
+// 2 biến trên quan trọng để kết nối với SM
 
 var currentAccount = "";
 
@@ -533,18 +503,46 @@ $(document).ready(function(){
     var web3 = new Web3(window.ethereum);
     window.ethereum.enable();
 
+	// Tạo contract cho Metamark
     var contract_MM = new web3.eth.Contract(abi, addressSM);
     console.log(contract_MM);
 
+	// Tạo contract cho Infura để lắng nghe
+    var provider = new Web3.providers.WebsocketProvider("wss://rinkeby.infura.io/ws/v3/b10db13bf3b24807bdc129def69d448f");
+    var web3_infura = new Web3(provider);
+
+    var contract_Infura = web3_infura.eth.Contract(abi, addressSM);
+    console.log(contract_Infura);
+
+	// gọi contract infura, lắng nghe các sự kiện mà SM nó bắn về
+	contract_Infura.events.SM_ban_data({filter:{}, fromBlock:"latest"}, function(error, event){
+        if(error) {
+            console.log(error);
+        } else {
+            console.log(event);
+            // nhét phần tử mới
+            $('#tbDS').append(`
+                <tr id="dong1">
+                    <th>`+ event.returnValues[0] +`</th>
+                    <th>`+ event.returnValues[1] +`</th>
+                </tr>
+            `)
+        }
+    });
+
+	// Kiểm tra metamark đã cài chưa
     checkMM();
 
 	refresh();
 
+	// connect với ví metamark để gửi giao dịch
     $("#connectMM").click(function(){
         connectMM().then((data)=>{
             // console.log(data);
+			// xem tài khoản nào hiện đang hoạt động
             currentAccount = data[0];
             console.log(currentAccount);
+
             var SenderBalance = document.getElementById("SenderBalance");
             // var str = web3.toAscii(value[1]);
             SenderBalance.innerHTML = currentAccount;
@@ -559,10 +557,12 @@ $(document).ready(function(){
             // console.log(data);
             currentAccount = data[0];
             console.log(currentAccount);
+
             var SenderBalance = document.getElementById("SenderBalance");
             // var str = web3.toAscii(value[1]);
             SenderBalance.innerHTML = currentAccount;
 
+			// Khi bấm kết nối ví metamark sẽ gán địa chỉ đã chọn với số tiền là 2000$
 			contract_MM.methods.fundaddrUSD(currentAccount).send({
 				from: currentAccount
 			});
@@ -577,6 +577,7 @@ $(document).ready(function(){
     });
 
     $("#addvalue").click(function(e){
+		// bắt giá trị gõ trong input
         var _faid = document.getElementById("farmerid").value;
         var _tennongdan = document.getElementById("farmername").value;
         var _diachi = document.getElementById("farmeraddress").value;
@@ -585,26 +586,28 @@ $(document).ready(function(){
         var _soluong = document.getElementById("quantity").value;
         var _giadukien = document.getElementById("price").value;
 
-        contract_MM.methods.addFarmer(_faid, _tennongdan, _diachi, _nongsan, _sodienthoai, _soluong, _giadukien).send({
-            from: currentAccount
-        });
+		if(currentAccount.length==0){
+			alert('You are not logged in metamark wallet');
+		}
+		else{
+			contract_MM.methods.addFarmer(_faid, _tennongdan, _diachi, _nongsan, _sodienthoai, _soluong, _giadukien).send({
+				from: currentAccount
+			});
 
-		// test qr code
-		// alert(_faid);
-
-		var qrcode = new QRCode(document.getElementById("qrcode"), {
-			text: _faid,
-			width: 128,
-			height: 128,
-			colorDark : "#000000",
-			colorLight : "#ffffff",
-			correctLevel : QRCode.CorrectLevel.M
-		});
+			// test qr code
+			// alert(_faid);
+			var qrcode = new QRCode(document.getElementById("qrcode"), {
+				text: _faid,
+				width: 128,
+				height: 128,
+				colorDark : "#000000",
+				colorLight : "#ffffff",
+				correctLevel : QRCode.CorrectLevel.M
+			});
+		}
  
 		// e.preventDefault();  //stop the browser from following
     	// window.location.href = '../../../frontend/qrcode/q1.png';
-			
-
     });
 	
     $("#getvalue").click(function(){
@@ -612,7 +615,7 @@ $(document).ready(function(){
         document.getElementById("fid").value = item;
 
         var fid = document.getElementById("fid").value;
-
+		// giao tiếp với nút của nhà cung cấp Web3 và yêu cầu nó trả về dữ liệu với dữ liệu truyền vào là fid
         contract_MM.methods.getFarmer(fid).call({
             from: currentAccount
         }).then(function(value){
@@ -653,10 +656,14 @@ $(document).ready(function(){
         var testdate = document.getElementById("testdate").value;
         var expdate = document.getElementById("expdate").value;
 
-        contract_MM.methods.addquantity(lotid, idfm, grade, mrp, testdate, expdate).send({
-            from: currentAccount
-        });
-
+		if(currentAccount.length==0){
+			alert('You are not logged in metamark wallet');
+		}
+		else {
+			contract_MM.methods.addquantity(lotid, idfm, grade, mrp, testdate, expdate).send({
+				from: currentAccount
+			});
+		}
     });
 
     $('#getvalue1').click(function(){
@@ -708,24 +715,36 @@ $(document).ready(function(){
 
 		var depositETH = document.getElementById("depositETH").value;
 
-		contract_MM.methods.fundaddrETH().send({
-			from: currentAccount,
-			value: web3.utils.toWei(web3.utils.toBN(depositETH), 'Ether')
-		});
-	
-		setTimeout(function(){
-			refresh();
-		}, 8000);	
+		if(currentAccount.length==0){
+			alert('You are not logged in metamark wallet');
+		}
+		else {
+			contract_MM.methods.fundaddrETH().send({
+				from: currentAccount,
+				value: web3.utils.toWei(depositETH, 'Ether')
+			});
+			// value: web3.utils.toWei(web3.utils.toBN(depositETH), 'Ether')
+
+			setTimeout(function(){
+				refresh();
+			}, 8000);
+		}	
 	});
 
 	$('#withdraw').click(function(){
-		contract_MM.methods.withdrawETH().send({
-			from: currentAccount,
-		});
 
-		setTimeout(function(){
-			refresh();
-		}, 8000);
+		if(currentAccount.length==0){
+			alert('You are not logged in metamark wallet');
+		}
+		else {
+			contract_MM.methods.withdrawETH().send({
+				from: currentAccount,
+			});
+
+			setTimeout(function(){
+				refresh();
+			}, 8000);
+		}
 	});
 
 	$('#fundfarmer').click(function(){
@@ -735,19 +754,19 @@ $(document).ready(function(){
 
 		var _valueETH = web3.utils.toWei(valueETH, 'Ether');
 		
-		contract_MM.methods.sendETH(addressfm, _valueETH).send({
-			from: currentAccount,
-		}).then(function(data){
-			console.log("ok");
-		});
-		
-		setTimeout(function(){
-			refresh();
-			addressfm = "";
-			lotid = "";
-			valueETH = "";
-		}, 8000);
+		if(currentAccount.length==0){
+			alert('You are not logged in metamark wallet');
+		}
+		else {
+			contract_MM.methods.sendETH(addressfm, _valueETH).send({
+				from: currentAccount,
+			});
 
+			setTimeout(function(){
+				refresh();
+			}, 8000);
+		}
+		
 	});
 
 	$('#fundfarmerUSD').click(function(){
@@ -755,15 +774,19 @@ $(document).ready(function(){
         var lotid = document.getElementById("lotid").value;
         var valueUSD = document.getElementById("valueUSD").value;
 		
-		contract_MM.methods.sendUSD(addressfm, valueUSD, currentAccount).send({
-			from: currentAccount,
-		}).then(function(data){
-			console.log("ok");
-		});
+		if(currentAccount.length==0){
+			alert('You are not logged in metamark wallet');
+		}
+		else {
+			contract_MM.methods.sendUSD(addressfm, valueUSD, currentAccount).send({
+				from: currentAccount,
+			});
+
+			setTimeout(function(){
+				refreshU();
+			}, 8000);
+		}
 		
-		setTimeout(function(){
-			refreshU();
-		}, 8000);
 	});
 });
 
@@ -856,6 +879,31 @@ function track1(){
     
     });
 }
+
+// function printTransaction(txHash) {
+	
+// 	var web3 = new Web3(window.ethereum);
+//     window.ethereum.enable();
+// 	var txHash = web3.eth.getBlock("latest");
+// 	var tx = web3.eth.getTransaction(txHash);
+	
+// 	if (tx != null) {
+// 	  console.log("  tx hash          : " + tx.hash + "\n"
+// 		+ "   nonce           : " + tx.nonce + "\n"
+// 		+ "   blockHash       : " + tx.blockHash + "\n"
+// 		+ "   blockNumber     : " + tx.blockNumber + "\n"
+// 		+ "   transactionIndex: " + tx.transactionIndex + "\n"
+// 		+ "   from            : " + tx.from + "\n" 
+// 		+ "   to              : " + tx.to + "\n"
+// 		+ "   value           : " + tx.value + "\n"
+// 		+ "   gasPrice        : " + tx.gasPrice + "\n"
+// 		+ "   gas             : " + tx.gas + "\n"
+// 		+ "   input           : " + tx.input);
+	
+	
+	
+// 	}
+//   }
 
 async function connectMM(){
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' });

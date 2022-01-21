@@ -15,4 +15,7 @@ var CategorySchema = mongoose.Schema({
     }
 });
 
+// export model tên Category, trên monggo thêm kí tự s vào
 module.exports = mongoose.model('Category', CategorySchema);
+
+// có model và lưu trữ thông tin, đi về cái route bên controller để gọi model đó
